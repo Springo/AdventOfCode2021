@@ -12,7 +12,7 @@ for line in lines:
     vals.append(int(line))
 
 count = 0
-for i in range(3, len(vals)):
+for i in range(1, len(vals)):
     if vals[i] > vals[i-1]:
         count += 1
 print(count)
