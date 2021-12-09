@@ -51,12 +51,19 @@ def grid_project(grid, i, j, dir, step=1):
     return None, None
 
 
-def get_neighbors(grid, i, j):
+def get_neighbors(grid, i, j, indices=False, orth=False):
     neigh = []
-    for dir in range(8):
+    if orth:
+        dirs = [0, 2, 4, 6]
+    else:
+        dirs = range(8)
+    for dir in dirs:
         i2, j2 = grid_project(grid, i, j, dir)
         if i2 is not None:
-            neigh.append(grid[i2][j2])
+            if indices:
+                neigh.append((i2, j2))
+            else:
+                neigh.append(grid[i2][j2])
     return neigh
 
 
