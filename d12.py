@@ -1,4 +1,5 @@
-from copy import deepcopy
+from copy import copy
+from time import time
 
 
 def readFile(filename):
@@ -19,7 +20,7 @@ def search_paths(node, target, adj_list, visited, allowed, memo):
     path_count = 0
     for ne in adj_list[node]:
         if ne not in visited:
-            new_visited = deepcopy(visited)
+            new_visited = copy(visited)
             if not ne.isupper():
                 new_visited.add(ne)
             c_path_count = search_paths(ne, target, adj_list, new_visited, allowed, memo)
@@ -45,5 +46,16 @@ for line in lines:
     adj_list[ls[0]].append(ls[1])
     adj_list[ls[1]].append(ls[0])
 
-print(search_paths("start", "end", adj_list, {"start"}, 0, dict()))
-print(search_paths("start", "end", adj_list, {"start"}, 1, dict()))
+t1 = time()
+print("Part 1: {}".format(search_paths("start", "end", adj_list, {"start"}, 0, dict())))
+t2 = time()
+print("Time (s): {}".format(t2 - t1))
+print("Part 2: {}".format(search_paths("start", "end", adj_list, {"start"}, 1, dict())))
+t3 = time()
+print("Time (s): {}".format(t3 - t2))
+print("With 2 revisits: {}".format(search_paths("start", "end", adj_list, {"start"}, 2, dict())))
+t4 = time()
+print("Time (s): {}".format(t4 - t3))
+print("With 100 revisits: {}".format(search_paths("start", "end", adj_list, {"start"}, 100, dict())))
+t5 = time()
+print("Time (s): {}".format(t5 - t4))
