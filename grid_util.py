@@ -51,12 +51,35 @@ def grid_project(grid, i, j, dir, step=1):
     return None, None
 
 
-def get_neighbors(grid, i, j, indices=False, orth=False):
+def get_region(grid, i1, j1, i2, j2, default=None):
+    region = []
+    for i in range(i1, i2 + 1):
+        if i < 0 or i >= len(grid):
+            if default is not None:
+                row = [default] * (j2 - j1 + 1)
+                region.append(row)
+        else:
+            row = []
+            for j in range(j1, j2 + 1):
+                if j < 0 or j >= len(grid[i]):
+                    if default is not None:
+                        row.append(default)
+                else:
+                    row.append(grid[i][j])
+            region.append(row)
+
+    return region
+
+
+def get_neighbors(grid, i, j, indices=False, orth=False, custom_dirs=None, default=None):
     neigh = []
-    if orth:
-        dirs = [0, 2, 4, 6]
+    if custom_dirs is not None:
+        dirs = custom_dirs
     else:
-        dirs = range(8)
+        if orth:
+            dirs = [0, 2, 4, 6]
+        else:
+            dirs = range(8)
     for dir in dirs:
         i2, j2 = grid_project(grid, i, j, dir)
         if i2 is not None:
@@ -64,6 +87,9 @@ def get_neighbors(grid, i, j, indices=False, orth=False):
                 neigh.append((i2, j2))
             else:
                 neigh.append(grid[i2][j2])
+        else:
+            if default is not None:
+                neigh.append(default)
     return neigh
 
 
