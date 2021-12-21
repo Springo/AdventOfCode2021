@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import time
 import random
 
-year = 2020
+year = 2021
 points = dict()
 for day in range(1, 26):
     url = "https://adventofcode.com/{}/leaderboard/day/{}".format(year, day)
