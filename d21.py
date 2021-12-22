@@ -33,7 +33,7 @@ while not done:
 rolls = [1, 2, 3]
 
 
-def outcomes(p1_pos, p2_pos, p1_score, p2_score, turn, memo):
+def outcomes(p1_pos, p2_pos, p1_score, p2_score, turn, win_thresh, memo):
     key = (p1_pos, p2_pos, p1_score, p2_score, turn)
     if key in memo:
         return memo[key]
@@ -46,19 +46,19 @@ def outcomes(p1_pos, p2_pos, p1_score, p2_score, turn, memo):
                 if turn == 1:
                     new_p1_pos = (p1_pos + tr - 1) % 10 + 1
                     new_p1_score = p1_score + new_p1_pos
-                    if new_p1_score >= 21:
+                    if new_p1_score >= win_thresh:
                         t1 += 1
                     else:
-                        n1, n2 = outcomes(new_p1_pos, p2_pos, new_p1_score, p2_score, 2, memo)
+                        n1, n2 = outcomes(new_p1_pos, p2_pos, new_p1_score, p2_score, 2, win_thresh, memo)
                         t1 += n1
                         t2 += n2
                 elif turn == 2:
                     new_p2_pos = (p2_pos + tr - 1) % 10 + 1
                     new_p2_score = p2_score + new_p2_pos
-                    if new_p2_score >= 21:
+                    if new_p2_score >= win_thresh:
                         t2 += 1
                     else:
-                        n1, n2 = outcomes(p1_pos, new_p2_pos, p1_score, new_p2_score, 1, memo)
+                        n1, n2 = outcomes(p1_pos, new_p2_pos, p1_score, new_p2_score, 1, win_thresh, memo)
                         t1 += n1
                         t2 += n2
 
@@ -66,4 +66,4 @@ def outcomes(p1_pos, p2_pos, p1_score, p2_score, turn, memo):
     return t1, t2
 
 
-print(max(outcomes(input_p1, input_p2, 0, 0, 1, dict())))
+print(max(outcomes(input_p1, input_p2, 0, 0, 1, 21, dict())))
