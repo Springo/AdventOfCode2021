@@ -87,7 +87,12 @@ class CubeMass:
 
     def add_cube(self, c):
         to_add = [c]
+        inter_cubes = []
         for c1 in self.cubes:
+            result = get_intersection(c, c1)
+            if result[0] is not None:
+                inter_cubes.append(c1)
+        for c1 in inter_cubes:
             new_to_add = []
             for c2 in to_add:
                 subs = cube_subtract(c2, c1)
