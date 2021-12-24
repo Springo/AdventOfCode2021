@@ -26,10 +26,13 @@ for day in range(1, 26):
     time.sleep(max(0.5, 2 + random.gauss(0, 0.5)))
 
 s_keys = sorted(points, key=points.get, reverse=True)
-place = 1
+place = 0
+point = 0
 print("\n\n====================")
 print("Leaderboard")
 print("====================")
 for key in s_keys:
+    if not point == points[key]:
+        place += 1
+    point = points[key]
     print("{}) {} -- {}".format(place, points[key], key))
-    place += 1
