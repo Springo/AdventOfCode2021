@@ -34,16 +34,22 @@ for line in lines:
     args = line.split()
     parsed_args = [args[0]]
     for arg in args[1:]:
-        if arg.isnumeric():
+        sign = 1
+        new_arg = arg
+        if arg[0] == '-':
+            sign = -1
+            new_arg = new_arg[1:]
+        if new_arg.isnumeric():
             try:
-                val = int(arg)
-                parsed_args.append(val)
+                val = int(new_arg)
+                parsed_args.append(val * sign)
             except:
-                val = float(arg)
-                parsed_args.append(val)
+                val = float(new_arg)
+                parsed_args.append(val * sign)
         else:
             parsed_args.append(arg)
     ins_list.append(parsed_args)
+
 
 
 for args in ins_list:
